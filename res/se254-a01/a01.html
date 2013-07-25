@@ -1,0 +1,61 @@
+<h2>SOFTENG254 - 2013 - Assignment 01</h1>
+
+<h3>Ewan Tempero</h3>
+
+The main goal of this assignment is to write tests that will detect faults in code.
+
+The materials referred to in this assignment can be found on <a href="https://cecil.auckland.ac.nz">Cecil</a>.
+
+<p>
+<table border>
+<tr>
+ <th align=left>Due</th>
+ <td>1900hr 9 August</td>
+</tr>
+<tr>
+ <th align=left>Worth</th>
+ <td>5%</td>
+</tr>
+<tr>
+ <th align=left>Submission</th>
+ <td><a href="https://adb.auckland.ac.nz">UoA ADB</a> The file <tt>TestMoney.java</tt></td>
+</tr>
+</table>
+
+<h3>Functionality To Test</h3>
+
+For this assignment, you are to create tests to determine whether code written by someone else is correct.  You will be given a number of <tt>jar</tt> files, all of which claim to provide a class represents an amount of money.  In fact, each implementation except one is known to have at least one fault. You have to create a set of tests (a <em>test suite</em>) using the JUnit framework that will detect at least one fault in all of the different implementations.
+
+<h3>Details</h3>
+
+On the course website you will find a file <tt>se254-a01.tar</tt>. This contains everything you need. Unpack it at an appropriate place.
+
+<p>In the files for this assignment, you will find the file <tt>a01.html</tt> (which you are reading). You will also find 11 <tt>jar</tt> files.  Each of these contains an implementation of the class <tt>se254.money.Money</tt>.  In some of them (those with names like <tt>badA.jar</tt>, <tt>badB.jar</tt>, and so on) the implementation of <tt>se254.money.Money</tt> is known to contain a fault.  One (<tt>good.jar</tt>) is <em>believed</em> to contain no faults. You will also find a file named <tt>TestMoney.java</tt>, which is a template for the file you are to submit. Finally, there is a file   <a href="Money.html"><tt>Money.html</tt></a>.  This is a Javadoc page describing the expected functionality of the <tt>se254.money.Money</tt> class. You are to base your test suite on what is described in this file.
+
+
+<h3>Submission</h3>
+
+You are to submit a single file name <tt>TestMoney.java</tt>. It should be a JUnit 3.8-style test class providing a test suite to test implementations that meet the requirements for the <tt>se254.money.Money</tt> class. The name of the class should be <tt>se254.money.TestMoney</tt>.  <b>Failure to follow these requirements will result in a mark of zero.</b>  (Inability to follow instructions is an indication of poor quality work, and thus inappropriate for a course on Quality Assurance.)
+
+<h3>Assessment</h3>
+
+This assignment is marked out of 20 marks, and is worth 5% of your overall grade for SOFTENG254.  Marks will be allocated according to how many of the implementations provided by us you correctly detect faults in (not, "how many faults"), and how well you explain what you are testing.
+Your tests will be partially assessed by an automatic marking system. If the automatic marking system either cannot mark your submission, or marks it incorrectly due to your submission not meeting the requirements, then you will get zero for the assignment. (Think of it as you have been assigned to write a class that fits into another system. Your boss is unlikely to be impressed if you write a class that doesn't fit.)  Note that if your class cannot be compiled, then the automatic marking system will not be able to mark it.
+The assignment is marked out of 20 as follows:
+<ul> <li> You will get 2 marks if all your tests pass on the "correct" implementation, or if all failed tests indicate an actual fault in the "correct" implementation.
+<li> You will get 0.5 marks for every implementation supplied to you if your test suite indicates that that implementation has a fault.  This means that one of your tests must demonstrate that the implementation does the wrong thing.  It is <b>not</b> sufficient that JUnit indicates that the test has failed --- the test must fail <em>and</em> the failure is clearly due to the implementation containing a fault. (5 marks total)
+<li> Your tests will be run against another set of implementations that contain faults. You will get 2 marks for each implementation your test suite correctly indicates contains a fault. (10 marks total)
+<li> You will get 3 marks for how well you document your tests.  (See "Explaining the test case" below). </ul>
+In addition, you could be <b>penalised</b> as follows: <ol> <li> 50% of your mark out of 20 (as described above) if you have more than 100 calls to an <tt>assert</tt><em>X</em> method.  This is a fairly generous limit, that is, it is much bigger than what you should need. If you feel you need more, discuss it with me.
+<li> 25% of your mark out of 20 (as described above) if your test code quality is poor (See "Test Code Quality" below). </ol>
+<h4>Explaining the test case</h4>
+It is a common situation that someone (usually you) looking at your code at some point in the future thinks "I wonder if there is a test for this weird case?" In order to help answer this kind of question, it is worth documenting your test cases. It doesn't have to be super elaborate &mdash; just a sentence or so that would help someone reading your tests figure out what <em>general</em> case you are trying to test. Put such documentation in JavaDoc comments for your test case methods. Documentation that makes no attempt to explain <em>why</em> it is worth testing what you're testing or no documentation at all are examples that are likely to lose marks. An example of poor documentation is: "Tests the case for the amount $12.50". This says <em>what</em> the test is, but not <em>why</em> this test is useful. You need to give some idea as to why you think this particular input will improve the quality of your test suite.
+<h4>Test Code Quality</h4>
+You should give some thought to how you organise your tests. You might even consider developing auxiliary methods to make the test methods easier to write. As well as documenting your individual methods, it is often helpful to group them according to some more general scheme to help keep track of what is being tested where. Lack of any organisation, poor test code, and code that contains debugging print statements are all examples that are likely to lose marks.
+<h3>Due dates and Penalties</h3>
+The due date for this assignment is 1900hr 9 August. Late assignments will not be accepted without appropriate documentation (that is, documentation provided by me).
+<h3>Submission</h3>
+You must submit your solutions via the  <a href="https://adb.auckland.ac.nz">University Assignment Dropbox</a> You may submit multiple times with only the most recent submission counting. You should submit just the <b>one</b> file <tt>TestMoney.java</tt>.
+
+<h3>Notes</h3> <ol> <li> The description given in the JavaDoc page is deliberately not complete (or even consistent). It is fairly representative of what the original software developer would have to work with, but that developer would also have to figure out all the weird cases that haven't been mentioned. As the tester, you have to do the same. If you are unsure about some case, <b>ask</b>. <li> There may be small inconsistencies between what the JavaDoc says should happen and what actually happens (especially for <tt>good.jar</tt>). <em>You should not assume these are "faults" in the usual sense.</em> The problem may be with the JavaDoc.  <li> There are many ways that the implementations could fail. In particular, it is possible that they might fail due to something like an <tt>ArrayIndexOutOfBoundsException</tt> &mdash; that is, JUnit may report an    <b>Error</b> not a <b>Failure</b>. This is still considered a failed test.
+<li> Documentation for JUnit (and other Java documentation) is available from the course website. Note that for this assignment we are using version 3.8.*. </ol>
