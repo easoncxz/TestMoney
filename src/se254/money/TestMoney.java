@@ -34,40 +34,102 @@ public class TestMoney extends TestCase {
 	}
 
 	/**
-	 * To test all cases for construction and toString().
+	 * To make sure that this constructor is reliable. Later tests depend on
+	 * this constructor.
 	 */
 	public void testCentsConstructor() {
 		Money m;
 		try {
+			// trivial case.
 			m = new Money(0, 0);
 			assertEquals(m.toString(), "$0.00");
-			m = new Money(0, 99);
-			assertEquals(m.toString(), "$0.99");
-			m = new Money(0, -99);
-			assertEquals(m.toString(), "-$0.99");
-			m = new Money(1, 0);
-			assertEquals(m.toString(), "$1.00");
+
+			// consider "trailing zeros".
 			m = new Money(1, 10);
 			assertEquals(m.toString(), "$1.10");
-			try {
-				m = new Money(1, -10); // illegal argument
-			} catch (IllegalArgumentException e) {
-				// test passed.
-			}
+			
+			// legal negative cases.
 			m = new Money(-1, 0);
 			assertEquals(m.toString(), "-$1.00");
-			m = new Money(-1, 2);
-			assertEquals(m.toString(), "-$1.02");
+			m = new Money(0, -1);
+			assertEquals(m.toString(), "-$0.01");
+			m = new Money(-1, 1);
+			assertEquals(m.toString(), "-$1.01");
+			
+			// negative after positive.
 			try {
-				m = new Money(-1, -2); // illegal argument
+				m = new Money(1, -1);
 			} catch (IllegalArgumentException e) {
 				// test passed.
 			}
+			
+			// multiple negatives.
+			try {
+				m = new Money(-1, -2);
+			} catch (IllegalArgumentException e) {
+				// test passed.
+			}
+			
 		} catch (NullPointerException e) {
-			fail(); // i.e. for when m is null.
-		} // should capture Exception exceptions?
+			// considering the case when m is null.
+			fail();
+		} 
+		// should capture Exception exceptions?
 	}
 
+	public void testHundredthConstructor() {
+		Money m;
+
+		// simple positive cases
+		m = new Money(0, 0, 0);
+		assertEquals(m.toString(), "$0.00");
+		m = new Money(0, 0, 1);
+		assertEquals(m.toString(), "$0.0001");
+		m = new Money(0, 0, 10);
+		assertEquals(m.toString(), "$0.001");
+
+		// simple negative cases
+		m = new Money(0, 0, -1);
+		assertEquals(m.toString(), "-$0.0001");
+		m = new Money(0, -1, 0);
+		assertEquals(m.toString(), "-$0.01");
+		m = new Money(-1, 0, 0);
+		assertEquals(m.toString(), "-$1.00");
+
+		// negative after positive
+		try {
+			m = new Money(0, 1, -1);
+		} catch (IllegalArgumentException e) {
+			// test passed.
+		}
+		try {
+			m = new Money(1, 0, -1);
+		} catch (IllegalArgumentException e) {
+			// test passed.
+		}
+		try {
+			m = new Money(1, -1, 0);
+		} catch (IllegalArgumentException e) {
+			// test passed.
+		}
+
+		m = new Money(0, -1, 0);
+		assertEquals(m.toString(), "-$0.10");
+		m = new Money(0, -1, 1);
+		assertEquals(m.toString(), "-$0.1001");
+		m = new Money(1, 0, 0);
+		assertEquals(m.toString(), "$1.00");
+		m = new Money(1, 0, 1);
+		assertEquals(m.toString(), "$1.0001");
+		m = new Money(-1, 0, 1);
+		assertEquals(m.toString(), "-$1.0001");
+		m = new Money(-1, 0, 10);
+		assertEquals(m.toString(), "-$1.001");
+		m = new Money(-1, -1, 0);
+		m = new Money(-1, -1, 1);
+		m = new Money(-1, -1, -1);
+
+	}
 	/**
 	 * DO NOT DELETE THIS This is needed for the automatic marking process.
 	 **/
