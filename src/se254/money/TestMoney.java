@@ -19,62 +19,44 @@ import junit.framework.TestCase;
  */
 public class TestMoney extends TestCase {
 
-	private Money money;
-
-	public void setUp() {
-		money = new Money();
-	}
+	private Money m;
 
 	/**
 	 * A trivial test.
 	 */
 	public void testDefaultConstructor() {
-		assertTrue(money != null);
-		assertEquals(money.toString(), "$0.00");
+		assertTrue(m != null);
+		assertEquals(m.toString(), "$0.00");
 	}
 
-	/**
-	 * To make sure that this constructor is reliable. Later tests depend on
-	 * this constructor.
-	 */
+	public void testCentsConstructorWithTrailingZeros() {
+		m = new Money(1, 10);
+		assertEquals(m.toString(), "$1.10");
+	}
+
 	public void testCentsConstructor() {
-		Money m;
+		// legal negative cases.
+		m = new Money(-1, 0);
+		assertEquals(m.toString(), "-$1.00");
+		m = new Money(0, -1);
+		assertEquals(m.toString(), "-$0.01");
+		m = new Money(-1, 1);
+		assertEquals(m.toString(), "-$1.01");
+
+		// negative after positive.
 		try {
-			// trivial case.
-			m = new Money(0, 0);
-			assertEquals(m.toString(), "$0.00");
-
-			// consider "trailing zeros".
-			m = new Money(1, 10);
-			assertEquals(m.toString(), "$1.10");
-
-			// legal negative cases.
-			m = new Money(-1, 0);
-			assertEquals(m.toString(), "-$1.00");
-			m = new Money(0, -1);
-			assertEquals(m.toString(), "-$0.01");
-			m = new Money(-1, 1);
-			assertEquals(m.toString(), "-$1.01");
-
-			// negative after positive.
-			try {
-				m = new Money(1, -1);
-			} catch (IllegalArgumentException e) {
-				// test passed.
-			}
-
-			// multiple negatives.
-			try {
-				m = new Money(-1, -2);
-			} catch (IllegalArgumentException e) {
-				// test passed.
-			}
-
-		} catch (NullPointerException e) {
-			// considering the case when m is null.
-			fail();
+			m = new Money(1, -1);
+		} catch (IllegalArgumentException e) {
+			// test passed.
 		}
-		// should capture Exception exceptions?
+
+		// multiple negatives.
+		try {
+			m = new Money(-1, -2);
+		} catch (IllegalArgumentException e) {
+			// test passed.
+		}
+
 	}
 
 	public void testHundredthConstructor() {
