@@ -25,6 +25,7 @@ public class TestMoney extends TestCase {
 	 * A trivial test.
 	 */
 	public void testDefaultConstructor() {
+		m = new Money();
 		assertTrue(m != null);
 		assertEquals(m.toString(), "$0.00");
 	}
@@ -34,23 +35,24 @@ public class TestMoney extends TestCase {
 		assertEquals(m.toString(), "$1.10");
 	}
 
-	public void testCentsConstructor() {
-		// legal negative cases.
+	public void testCentsConstructorWithLegalNegatives() {
 		m = new Money(-1, 0);
 		assertEquals(m.toString(), "-$1.00");
 		m = new Money(0, -1);
 		assertEquals(m.toString(), "-$0.01");
 		m = new Money(-1, 1);
 		assertEquals(m.toString(), "-$1.01");
+	}
 
-		// negative after positive.
+	public void testCentsConstructorWithLegalNegativeAfterPositive() {
 		try {
 			m = new Money(1, -1);
 		} catch (IllegalArgumentException e) {
 			// test passed.
 		}
+	}
 
-		// multiple negatives.
+	public void testCentsConstructorWithMultipleNegatives() {
 		try {
 			m = new Money(-1, -2);
 		} catch (IllegalArgumentException e) {
@@ -59,10 +61,8 @@ public class TestMoney extends TestCase {
 
 	}
 
-	public void testHundredthConstructor() {
+	public void testHundredthConstructorWithTrailingZeros() {
 		Money m;
-
-		// simple cases & trailing zeros.
 		m = new Money(0, 0, 0);
 		assertEquals(m.toString(), "$0.00");
 		m = new Money(0, 0, 1);
@@ -77,8 +77,9 @@ public class TestMoney extends TestCase {
 		assertEquals(m.toString(), "$1.0001");
 		m = new Money(1, 0, 10);
 		assertEquals(m.toString(), "$1.001");
+	}
 
-		// simple negative cases.
+	public void testHundrethConstructorWithNegativeParametres() {
 		m = new Money(0, 0, -1);
 		assertEquals(m.toString(), "-$0.0001");
 		m = new Money(0, 0, -10);
@@ -87,16 +88,18 @@ public class TestMoney extends TestCase {
 		assertEquals(m.toString(), "-$0.01");
 		m = new Money(-1, 0, 0);
 		assertEquals(m.toString(), "-$1.00");
+	}
 
-		// legal: multi-param negative cases.
+	public void testHundrethConstructorWithNegatives() {
 		m = new Money(0, -1, 1);
-		assertEquals(m.toString(), "-$0.1001");
+		assertEquals(m.toString(), "-$0.0101");
 		m = new Money(-1, 0, 1);
 		assertEquals(m.toString(), "-$1.0001");
 		m = new Money(-1, 0, 10);
 		assertEquals(m.toString(), "-$1.001");
+	}
 
-		// illegal: negative after positive.
+	public void testHundrethConstructorWithIllegalNegativeAfterPositive() {
 		try {
 			m = new Money(0, 1, -1);
 		} catch (IllegalArgumentException e) {
@@ -112,8 +115,9 @@ public class TestMoney extends TestCase {
 		} catch (IllegalArgumentException e) {
 			// test passed.
 		}
+	}
 
-		// illegal: multiple negatives.
+	public void testHundrethConstructorWithMultipleNegatives() {
 		try {
 			m = new Money(-1, -1, 0);
 		} catch (IllegalArgumentException e) {
@@ -136,10 +140,11 @@ public class TestMoney extends TestCase {
 		}
 
 	}
+
 	/**
 	 * DO NOT DELETE THIS This is needed for the automatic marking process.
 	 **/
-	// public static void main(String[] args) {
-	// junit.textui.TestRunner.run(TestInheritanceModel.class);
-	// }
+	public static void main(String[] args) {
+		junit.textui.TestRunner.run(TestMoney.class);
+	}
 }
