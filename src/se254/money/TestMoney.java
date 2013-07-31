@@ -31,8 +31,8 @@ public class TestMoney extends TestCase {
 	}
 
 	public void testCentsConstructorWithTrailingZeros() {
-		m = new Money(1, 10);
-		assertEquals(m.toString(), "$1.10");
+		m = new Money(0, 10);
+		assertEquals(m.toString(), "$0.10");
 	}
 
 	public void testCentsConstructorWithLegalNegatives() {
@@ -47,6 +47,7 @@ public class TestMoney extends TestCase {
 	public void testCentsConstructorWithLegalNegativeAfterPositive() {
 		try {
 			m = new Money(1, -1);
+			fail();
 		} catch (IllegalArgumentException e) {
 			// test passed.
 		}
@@ -55,6 +56,7 @@ public class TestMoney extends TestCase {
 	public void testCentsConstructorWithMultipleNegatives() {
 		try {
 			m = new Money(-1, -2);
+			fail();
 		} catch (IllegalArgumentException e) {
 			// test passed.
 		}
