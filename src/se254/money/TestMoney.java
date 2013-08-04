@@ -71,24 +71,24 @@ public class TestMoney extends TestCase {
 		}
 	}
 
-	// tests for Hundredth Constructor
+	// tests for Hundredths Constructor
 
-	public void testHundredthConstructorSimple() {
+	public void testHundredthsConstructorSimple() {
 		m = new Money(1, 0, 0);
 		assertEquals("$1.00", m.toString());
 	}
 
-	public void testHundredthConstructorWithLeadingZero() {
+	public void testHundredthsConstructorWithLeadingZero() {
 		m = new Money(0, 0, 1);
 		assertEquals("$0.0001", m.toString());
 	}
 
-	public void testHundredthConstructorWithTrailingZeros() {
+	public void testHundredthsConstructorWithTrailingZeros() {
 		m = new Money(0, 0, 10);
 		assertEquals("$0.001", m.toString());
 	}
 
-	public void testHundredthConstructorWithLegalOneNegative() {
+	public void testHundredthsConstructorWithLegalOneNegative() {
 		m = new Money(0, 0, -1);
 		assertEquals("-$0.0001", m.toString());
 		m = new Money(0, 0, -10);
@@ -99,7 +99,7 @@ public class TestMoney extends TestCase {
 		assertEquals("-$1.00", m.toString());
 	}
 
-	public void testHundredthConstructorWithLegalNegatives() {
+	public void testHundredthsConstructorWithLegalNegatives() {
 		m = new Money(0, -1, 1);
 		assertEquals(m.toString(), "-$0.0101");
 		m = new Money(-1, 0, 1);
@@ -110,7 +110,7 @@ public class TestMoney extends TestCase {
 		assertEquals(m.toString(), "-$1.001");
 	}
 
-	public void testHundredthConstructorWithIllegalNegativeAfterPositive() {
+	public void testHundredthsConstructorWithIllegalNegativeAfterPositive() {
 		try {
 			m = new Money(0, 1, -1);
 			fail("Note: Should have thrown IllegalArgumentException.");
@@ -131,7 +131,7 @@ public class TestMoney extends TestCase {
 		}
 	}
 
-	public void testHundredthConstructorWithIllegalMultipleNegatives() {
+	public void testHundredthsConstructorWithIllegalMultipleNegatives() {
 		try {
 			m = new Money(-1, 0, -1);
 			fail("Note: Should have thrown IllegalArgumentException.");
@@ -161,6 +161,73 @@ public class TestMoney extends TestCase {
 					e.getMessage());
 		}
 	}
+
+	// tests for compareTo() method.
+	//
+	// These tests considers the case when Money objects created via different
+	// constructors might be treated by this method differently.
+	//
+	// Note: Please ensure that the tests above (i.e. the tests for the
+	// constructors) pass before interpreting the results of these following
+	// tests.
+	
+	// Positives whole dollars Equaling.
+
+	public void testCompareToPositiveDollarsEqualingBetweenCentsConstructed() {
+		m = new Money(1, 0);
+		Money o = new Money(1, 0);
+		assertEquals(0, m.compareTo(o));
+		assertEquals(0, o.compareTo(m));
+	}
+
+	public void testCompareToPositiveDollarsEqualingBetweenHundredthsConstructed() {
+		m = new Money(1, 0, 0);
+		Money o = new Money(1, 0, 0);
+		assertEquals(0, m.compareTo(o));
+		assertEquals(0, o.compareTo(m));
+	}
+
+	public void testCompareToPositiveDollarsEqualingBetweenDifferentlyConstructed() {
+		Money o;
+		m = new Money(1, 0);
+		o = new Money(1, 0, 0);
+		assertEquals(0, m.compareTo(o));
+		assertEquals(0, o.compareTo(m));
+		m = new Money(1, 0, 0);
+		o = new Money(1, 0);
+		assertEquals(0, m.compareTo(o));
+		assertEquals(0, o.compareTo(m));
+	}
+	
+	// Negative whole dollars equalling.
+
+	public void testCompareToNegativeDollarsEqualingBetweenCentsConstructed() {
+		// TODO
+	}
+
+	public void testCompareToNegativeDollarsEqualingBetweenHundredthsConstructed() {
+		// TODO
+	}
+
+	public void testCompareToNegativeDollarsEqualingBetweenDifferentlyConstructed() {
+		// TODO
+	}
+	
+	// Zeroes equaling.
+
+	public void testCompareToZeroesEqualingBetweenCentsConstructed() {
+		// TODO
+	}
+
+	public void testCompareToZeroesEqualingBetweenHundredthConstructed() {
+		// TODO
+	}
+	
+	public void testCompareToZeroesEqualingBetweenDifferentlyConstructed() {
+		// TODO
+	}
+	
+	//
 
 	/**
 	 * DO NOT DELETE THIS This is needed for the automatic marking process.
