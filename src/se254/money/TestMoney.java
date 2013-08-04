@@ -21,126 +21,145 @@ public class TestMoney extends TestCase {
 
 	private Money m;
 
-	/**
-	 * A trivial test.
-	 */
 	public void testDefaultConstructor() {
 		m = new Money();
-		assertTrue(m != null);
-		assertEquals(m.toString(), "$0.00");
+		assertEquals("$0.00", m.toString());
 	}
 
-	public void testCentsConstructorWithTrailingZeros() {
-		m = new Money(0, 10);
-		assertEquals(m.toString(), "$0.10");
+	// tests for Cents Constructor
+
+	public void testCentsConstructorSimple() {
+		m = new Money(1, 0);
+		assertEquals("$1.00", m.toString());
+	}
+
+	public void testCentsConstructorWithLeadingZero() {
+		m = new Money(0, 0);
+		assertEquals("$0.00", m.toString());
+	}
+
+	public void testCentsConstructorWithTrailingZero() {
+		m = new Money(1, 10);
+		assertEquals("$1.10", m.toString());
 	}
 
 	public void testCentsConstructorWithLegalNegatives() {
 		m = new Money(-1, 0);
-		assertEquals(m.toString(), "-$1.00");
+		assertEquals("-$1.00", m.toString());
 		m = new Money(0, -1);
-		assertEquals(m.toString(), "-$0.01");
+		assertEquals("-$0.01", m.toString());
 		m = new Money(-1, 1);
-		assertEquals(m.toString(), "-$1.01");
+		assertEquals("-$1.01", m.toString());
 	}
 
-	public void testCentsConstructorWithLegalNegativeAfterPositive() {
+	public void testCentsConstructorWithIllegalNegativeAfterPositive() {
 		try {
 			m = new Money(1, -1);
-			fail();
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: negative after non-zero", e.getMessage());
 		}
 	}
 
-	public void testCentsConstructorWithMultipleNegatives() {
+	public void testCentsConstructorWithIllegalMultipleNegatives() {
 		try {
 			m = new Money(-1, -2);
-			fail();
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: more than one negative value",
+					e.getMessage());
 		}
+	}
 
+	// tests for Hundredth Constructor
+
+	public void testHundredthConstructorSimple() {
+		m = new Money(1, 0, 0);
+		assertEquals("$1.00", m.toString());
+	}
+
+	public void testHundredthConstructorWithLeadingZero() {
+		m = new Money(0, 0, 1);
+		assertEquals("$0.0001", m.toString());
 	}
 
 	public void testHundredthConstructorWithTrailingZeros() {
-		Money m;
-		m = new Money(0, 0, 0);
-		assertEquals(m.toString(), "$0.00");
-		m = new Money(0, 0, 1);
-		assertEquals(m.toString(), "$0.0001");
 		m = new Money(0, 0, 10);
-		assertEquals(m.toString(), "$0.001");
-		m = new Money(0, 1, 1);
-		assertEquals(m.toString(), "$0.0101");
-		m = new Money(0, 1, 10);
-		assertEquals(m.toString(), "$0.011");
-		m = new Money(1, 0, 1);
-		assertEquals(m.toString(), "$1.0001");
-		m = new Money(1, 0, 10);
-		assertEquals(m.toString(), "$1.001");
+		assertEquals("$0.001", m.toString());
 	}
 
-	public void testHundrethConstructorWithNegativeParametres() {
+	public void testHundredthConstructorWithLegalOneNegative() {
 		m = new Money(0, 0, -1);
-		assertEquals(m.toString(), "-$0.0001");
+		assertEquals("-$0.0001", m.toString());
 		m = new Money(0, 0, -10);
-		assertEquals(m.toString(), "-$0.001");
+		assertEquals("-$0.001", m.toString());
 		m = new Money(0, -1, 0);
-		assertEquals(m.toString(), "-$0.01");
+		assertEquals("-$0.01", m.toString());
 		m = new Money(-1, 0, 0);
-		assertEquals(m.toString(), "-$1.00");
+		assertEquals("-$1.00", m.toString());
 	}
 
-	public void testHundrethConstructorWithNegatives() {
+	public void testHundredthConstructorWithLegalNegatives() {
 		m = new Money(0, -1, 1);
 		assertEquals(m.toString(), "-$0.0101");
 		m = new Money(-1, 0, 1);
 		assertEquals(m.toString(), "-$1.0001");
+		m = new Money(-1, 1, 0);
+		assertEquals(m.toString(), "-$1.01");
 		m = new Money(-1, 0, 10);
 		assertEquals(m.toString(), "-$1.001");
 	}
 
-	public void testHundrethConstructorWithIllegalNegativeAfterPositive() {
+	public void testHundredthConstructorWithIllegalNegativeAfterPositive() {
 		try {
 			m = new Money(0, 1, -1);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: negative after non-zero", e.getMessage());
 		}
 		try {
 			m = new Money(1, 0, -1);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: negative after non-zero", e.getMessage());
 		}
 		try {
 			m = new Money(1, -1, 0);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: negative after non-zero", e.getMessage());
 		}
 	}
 
-	public void testHundrethConstructorWithMultipleNegatives() {
+	public void testHundredthConstructorWithIllegalMultipleNegatives() {
 		try {
-			m = new Money(-1, -1, 0);
+			m = new Money(-1, 0, -1);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: more than one negative value",
+					e.getMessage());
 		}
 		try {
 			m = new Money(0, -1, -1);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: more than one negative value",
+					e.getMessage());
 		}
 		try {
-			m = new Money(-1, 0, -1);
+			m = new Money(-1, -1, 0);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: more than one negative value",
+					e.getMessage());
 		}
 		try {
 			m = new Money(-1, -1, -1);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: more than one negative value",
+					e.getMessage());
 		}
-
 	}
 
 	/**
