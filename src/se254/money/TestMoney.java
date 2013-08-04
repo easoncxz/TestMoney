@@ -19,145 +19,153 @@ import junit.framework.TestCase;
  */
 public class TestMoney extends TestCase {
 
-	private Money money;
+	private Money m;
 
-	public void setUp() {
-		money = new Money();
-	}
-
-	/**
-	 * A trivial test.
-	 */
 	public void testDefaultConstructor() {
-		assertTrue(money != null);
-		assertEquals(money.toString(), "$0.00");
+		m = new Money();
+		assertEquals("$0.00", m.toString());
 	}
 
-	/**
-	 * To make sure that this constructor is reliable. Later tests depend on
-	 * this constructor.
-	 */
-	public void testCentsConstructor() {
-		Money m;
+	// tests for Cents Constructor
+
+	public void testCentsConstructorSimple() {
+		m = new Money(1, 0);
+		assertEquals("$1.00", m.toString());
+	}
+
+	public void testCentsConstructorWithLeadingZero() {
+		m = new Money(0, 0);
+		assertEquals("$0.00", m.toString());
+	}
+
+	public void testCentsConstructorWithTrailingZero() {
+		m = new Money(1, 10);
+		assertEquals("$1.10", m.toString());
+	}
+
+	public void testCentsConstructorWithLegalNegatives() {
+		m = new Money(-1, 0);
+		assertEquals("-$1.00", m.toString());
+		m = new Money(0, -1);
+		assertEquals("-$0.01", m.toString());
+		m = new Money(-1, 1);
+		assertEquals("-$1.01", m.toString());
+	}
+
+	public void testCentsConstructorWithIllegalNegativeAfterPositive() {
 		try {
-			// trivial case.
-			m = new Money(0, 0);
-			assertEquals(m.toString(), "$0.00");
-
-			// consider "trailing zeros".
-			m = new Money(1, 10);
-			assertEquals(m.toString(), "$1.10");
-
-			// legal negative cases.
-			m = new Money(-1, 0);
-			assertEquals(m.toString(), "-$1.00");
-			m = new Money(0, -1);
-			assertEquals(m.toString(), "-$0.01");
-			m = new Money(-1, 1);
-			assertEquals(m.toString(), "-$1.01");
-
-			// negative after positive.
-			try {
-				m = new Money(1, -1);
-			} catch (IllegalArgumentException e) {
-				// test passed.
-			}
-
-			// multiple negatives.
-			try {
-				m = new Money(-1, -2);
-			} catch (IllegalArgumentException e) {
-				// test passed.
-			}
-
-		} catch (NullPointerException e) {
-			// considering the case when m is null.
-			fail();
+			m = new Money(1, -1);
+			fail("Note: Should have thrown IllegalArgumentException.");
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid: negative after non-zero", e.getMessage());
 		}
-		// should capture Exception exceptions?
 	}
 
-	public void testHundredthConstructor() {
-		Money m;
+	public void testCentsConstructorWithIllegalMultipleNegatives() {
+		try {
+			m = new Money(-1, -2);
+			fail("Note: Should have thrown IllegalArgumentException.");
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid: more than one negative value",
+					e.getMessage());
+		}
+	}
 
-		// simple cases & trailing zeros.
-		m = new Money(0, 0, 0);
-		assertEquals(m.toString(), "$0.00");
+	// tests for Hundredth Constructor
+
+	public void testHundredthConstructorSimple() {
+		m = new Money(1, 0, 0);
+		assertEquals("$1.00", m.toString());
+	}
+
+	public void testHundredthConstructorWithLeadingZero() {
 		m = new Money(0, 0, 1);
-		assertEquals(m.toString(), "$0.0001");
+		assertEquals("$0.0001", m.toString());
+	}
+
+	public void testHundredthConstructorWithTrailingZeros() {
 		m = new Money(0, 0, 10);
-		assertEquals(m.toString(), "$0.001");
-		m = new Money(0, 1, 1);
-		assertEquals(m.toString(), "$0.0101");
-		m = new Money(0, 1, 10);
-		assertEquals(m.toString(), "$0.011");
-		m = new Money(1, 0, 1);
-		assertEquals(m.toString(), "$1.0001");
-		m = new Money(1, 0, 10);
-		assertEquals(m.toString(), "$1.001");
+		assertEquals("$0.001", m.toString());
+	}
 
-		// simple negative cases.
+	public void testHundredthConstructorWithLegalOneNegative() {
 		m = new Money(0, 0, -1);
-		assertEquals(m.toString(), "-$0.0001");
+		assertEquals("-$0.0001", m.toString());
 		m = new Money(0, 0, -10);
-		assertEquals(m.toString(), "-$0.001");
+		assertEquals("-$0.001", m.toString());
 		m = new Money(0, -1, 0);
-		assertEquals(m.toString(), "-$0.01");
+		assertEquals("-$0.01", m.toString());
 		m = new Money(-1, 0, 0);
-		assertEquals(m.toString(), "-$1.00");
+		assertEquals("-$1.00", m.toString());
+	}
 
-		// legal: multi-param negative cases.
+	public void testHundredthConstructorWithLegalNegatives() {
 		m = new Money(0, -1, 1);
-		assertEquals(m.toString(), "-$0.1001");
+		assertEquals(m.toString(), "-$0.0101");
 		m = new Money(-1, 0, 1);
 		assertEquals(m.toString(), "-$1.0001");
+		m = new Money(-1, 1, 0);
+		assertEquals(m.toString(), "-$1.01");
 		m = new Money(-1, 0, 10);
 		assertEquals(m.toString(), "-$1.001");
+	}
 
-		// illegal: negative after positive.
+	public void testHundredthConstructorWithIllegalNegativeAfterPositive() {
 		try {
 			m = new Money(0, 1, -1);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: negative after non-zero", e.getMessage());
 		}
 		try {
 			m = new Money(1, 0, -1);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: negative after non-zero", e.getMessage());
 		}
 		try {
 			m = new Money(1, -1, 0);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: negative after non-zero", e.getMessage());
 		}
+	}
 
-		// illegal: multiple negatives.
+	public void testHundredthConstructorWithIllegalMultipleNegatives() {
 		try {
-			m = new Money(-1, -1, 0);
+			m = new Money(-1, 0, -1);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: more than one negative value",
+					e.getMessage());
 		}
 		try {
 			m = new Money(0, -1, -1);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: more than one negative value",
+					e.getMessage());
 		}
 		try {
-			m = new Money(-1, 0, -1);
+			m = new Money(-1, -1, 0);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: more than one negative value",
+					e.getMessage());
 		}
 		try {
 			m = new Money(-1, -1, -1);
+			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
-			// test passed.
+			assertEquals("Invalid: more than one negative value",
+					e.getMessage());
 		}
-
 	}
+
 	/**
 	 * DO NOT DELETE THIS This is needed for the automatic marking process.
 	 **/
-	// public static void main(String[] args) {
-	// junit.textui.TestRunner.run(TestInheritanceModel.class);
-	// }
+	public static void main(String[] args) {
+		junit.textui.TestRunner.run(TestMoney.class);
+	}
 }
