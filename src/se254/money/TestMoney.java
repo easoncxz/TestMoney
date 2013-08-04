@@ -170,24 +170,24 @@ public class TestMoney extends TestCase {
 	// Note: Please ensure that the tests above (i.e. the tests for the
 	// constructors) pass before interpreting the results of these following
 	// tests.
-	
+
 	// Positives whole dollars Equaling.
 
-	public void testCompareToPositiveDollarsEqualingBetweenCentsConstructed() {
+	public void testCompareToPositiveWholeDollarsEqualingBetweenCentsConstructed() {
 		m = new Money(1, 0);
 		Money o = new Money(1, 0);
 		assertEquals(0, m.compareTo(o));
 		assertEquals(0, o.compareTo(m));
 	}
 
-	public void testCompareToPositiveDollarsEqualingBetweenHundredthsConstructed() {
+	public void testCompareToPositiveWholeDollarsEqualingBetweenHundredthsConstructed() {
 		m = new Money(1, 0, 0);
 		Money o = new Money(1, 0, 0);
 		assertEquals(0, m.compareTo(o));
 		assertEquals(0, o.compareTo(m));
 	}
 
-	public void testCompareToPositiveDollarsEqualingBetweenDifferentlyConstructed() {
+	public void testCompareToPositiveWholeDollarsEqualingBetweenDifferentlyConstructed() {
 		Money o;
 		m = new Money(1, 0);
 		o = new Money(1, 0, 0);
@@ -198,21 +198,21 @@ public class TestMoney extends TestCase {
 		assertEquals(0, m.compareTo(o));
 		assertEquals(0, o.compareTo(m));
 	}
-	
-	// Negative whole dollars equalling.
 
-	public void testCompareToNegativeDollarsEqualingBetweenCentsConstructed() {
+	// Negative whole WholeDollars equaling.
+
+	public void testCompareToNegativeWholeDollarsEqualingBetweenCentsConstructed() {
 		// TODO
 	}
 
-	public void testCompareToNegativeDollarsEqualingBetweenHundredthsConstructed() {
+	public void testCompareToNegativeWholeDollarsEqualingBetweenHundredthsConstructed() {
 		// TODO
 	}
 
-	public void testCompareToNegativeDollarsEqualingBetweenDifferentlyConstructed() {
+	public void testCompareToNegativeWholeDollarsEqualingBetweenDifferentlyConstructed() {
 		// TODO
 	}
-	
+
 	// Zeroes equaling.
 
 	public void testCompareToZeroesEqualingBetweenCentsConstructed() {
@@ -222,12 +222,44 @@ public class TestMoney extends TestCase {
 	public void testCompareToZeroesEqualingBetweenHundredthConstructed() {
 		// TODO
 	}
-	
+
 	public void testCompareToZeroesEqualingBetweenDifferentlyConstructed() {
 		// TODO
 	}
-	
-	//
+
+	// From here on: assuming that different constructors give the same thing.
+
+	// From a Positive.
+
+	public void testCompareToPositiveAndNegative() {
+		// TODO
+	}
+
+	public void testCompareToPositiveAndZero() {
+		// TODO
+	}
+
+	public void testCompareToPositiveAndPositiveTrueFraction() {
+		// TODO
+	}
+
+	public void testCompareToPositiveAndPositiveWithFraction() {
+		// TODO
+	}
+
+	// From a Zero.
+
+	public void testCompareToZeroAndPositive() {
+		// TODO
+	}
+
+	public void testCompareToZeroAndZero() {
+		// TODO
+	}
+
+	public void testCompareToZeroAndNegative() {
+		// TODO
+	}
 
 	/**
 	 * DO NOT DELETE THIS This is needed for the automatic marking process.
