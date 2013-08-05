@@ -163,35 +163,40 @@ public class TestMoney extends TestCase {
 	}
 
 	// tests for compareTo() method.
-	//
-	// These test depend on the previous tests passing.
-	
+	// (These test depend on the previous tests passing.)
 
-	// m = new Money(1, 0);
-	// Money o = new Money(1, 0, 0);
-	// assertEquals(0, m.compareTo(o));
-	// assertEquals(0, o.compareTo(m));
-	
-	public void testCompareToForPositveDollarHundredthVsPositiveDollarCentHundredth(){}
-	public void testCompareToForPositveDollarHundredthVsPositiveDollarHundredth() {}
-	public void testCompareToForPositveDollarHundredthVsPositiveDollarCent(){}
-	public void testCompareToForPositveDollarHundredthVsPositiveDollar(){}
-	public void testCompareToForPositveDollarHundredthVsPositiveCentHundredth(){}
-	public void testCompareToForPositveDollarHundredthVsPositiveCent(){}
-	public void testCompareToForPositveDollarHundredthVsPositiveHundredth(){}
-	public void testCompareToForPositveDollarHundredthVsZero() {}
-	public void testCompareToForPositveDollarHundredthVsNegativeHundredth(){}
-	public void testCompareToForPositveDollarHundredthVsNegativeCent(){}
-	public void testCompareToForPositveDollarHundredthVsNegativeCentHundredth(){}
-	public void testCompareToForPositveDollarHundredthVsNegativeDollar(){}
-	public void testCompareToForPositveDollarHundredthVsNegativeDollarCent(){}
-	public void testCompareToForPositveDollarHundredthVsNegativeDollarHundredth(){}
-	public void testCompareToForPositveDollarHundredthVsNegativeDollarCentHundredth(){}
-	
-	// more methods like the chunk above, e.g.:
-	// testCompareToForPositiveDollarCentVs*****
-	// testCompareToForPositiveHundredthVs****
-	// ****
+	public void testCompareToForPositiveVsDollarDiff() {
+	}
+
+	public void testCompareToForPositiveVsCentsDiff() {
+	}
+
+	public void testCompareToForPositiveVsHundredthsDiff() {
+	}
+
+	public void testCompareToForPositiveVsNonpositive() {
+	}
+
+	public void testCompareToForZeroVsPositive() {
+	}
+
+	public void testCompareToForZeroVsZero() {
+	}
+
+	public void testCompareToForZeroVsNegative() {
+	}
+
+	public void testCompareToForNegativeVsNonnegative() {
+	}
+
+	public void testCompareToForNegativeVsDollarDiff() {
+	}
+
+	public void testCompareToForNegativeVsCentsDiff() {
+	}
+
+	public void testCompareToForNegativeVsHundredthsDiff() {
+	}
 
 	/**
 	 * DO NOT DELETE THIS This is needed for the automatic marking process.
