@@ -164,102 +164,34 @@ public class TestMoney extends TestCase {
 
 	// tests for compareTo() method.
 	//
-	// These tests considers the case when Money objects created via different
-	// constructors might be treated by this method differently.
-	//
-	// Note: Please ensure that the tests above (i.e. the tests for the
-	// constructors) pass before interpreting the results of these following
-	// tests.
+	// These test depend on the previous tests passing.
+	
 
-	// Positives whole dollars Equaling.
-
-	public void testCompareToPositiveWholeDollarsEqualingBetweenCentsConstructed() {
-		m = new Money(1, 0);
-		Money o = new Money(1, 0);
-		assertEquals(0, m.compareTo(o));
-		assertEquals(0, o.compareTo(m));
-	}
-
-	public void testCompareToPositiveWholeDollarsEqualingBetweenHundredthsConstructed() {
-		m = new Money(1, 0, 0);
-		Money o = new Money(1, 0, 0);
-		assertEquals(0, m.compareTo(o));
-		assertEquals(0, o.compareTo(m));
-	}
-
-	public void testCompareToPositiveWholeDollarsEqualingBetweenDifferentlyConstructed() {
-		Money o;
-		m = new Money(1, 0);
-		o = new Money(1, 0, 0);
-		assertEquals(0, m.compareTo(o));
-		assertEquals(0, o.compareTo(m));
-		m = new Money(1, 0, 0);
-		o = new Money(1, 0);
-		assertEquals(0, m.compareTo(o));
-		assertEquals(0, o.compareTo(m));
-	}
-
-	// Negative whole WholeDollars equaling.
-
-	public void testCompareToNegativeWholeDollarsEqualingBetweenCentsConstructed() {
-		// TODO
-	}
-
-	public void testCompareToNegativeWholeDollarsEqualingBetweenHundredthsConstructed() {
-		// TODO
-	}
-
-	public void testCompareToNegativeWholeDollarsEqualingBetweenDifferentlyConstructed() {
-		// TODO
-	}
-
-	// Zeroes equaling.
-
-	public void testCompareToZeroesEqualingBetweenCentsConstructed() {
-		// TODO
-	}
-
-	public void testCompareToZeroesEqualingBetweenHundredthConstructed() {
-		// TODO
-	}
-
-	public void testCompareToZeroesEqualingBetweenDifferentlyConstructed() {
-		// TODO
-	}
-
-	// From here on: assuming that different constructors give the same thing.
-
-	// From a Positive.
-
-	public void testCompareToPositiveAndNegative() {
-		// TODO
-	}
-
-	public void testCompareToPositiveAndZero() {
-		// TODO
-	}
-
-	public void testCompareToPositiveAndPositiveTrueFraction() {
-		// TODO
-	}
-
-	public void testCompareToPositiveAndPositiveWithFraction() {
-		// TODO
-	}
-
-	// From a Zero.
-
-	public void testCompareToZeroAndPositive() {
-		// TODO
-	}
-
-	public void testCompareToZeroAndZero() {
-		// TODO
-	}
-
-	public void testCompareToZeroAndNegative() {
-		// TODO
-	}
+	// m = new Money(1, 0);
+	// Money o = new Money(1, 0, 0);
+	// assertEquals(0, m.compareTo(o));
+	// assertEquals(0, o.compareTo(m));
+	
+	public void testCompareToForPositveDollarHundredthVsPositiveDollarCentHundredth(){}
+	public void testCompareToForPositveDollarHundredthVsPositiveDollarHundredth() {}
+	public void testCompareToForPositveDollarHundredthVsPositiveDollarCent(){}
+	public void testCompareToForPositveDollarHundredthVsPositiveDollar(){}
+	public void testCompareToForPositveDollarHundredthVsPositiveCentHundredth(){}
+	public void testCompareToForPositveDollarHundredthVsPositiveCent(){}
+	public void testCompareToForPositveDollarHundredthVsPositiveHundredth(){}
+	public void testCompareToForPositveDollarHundredthVsZero() {}
+	public void testCompareToForPositveDollarHundredthVsNegativeHundredth(){}
+	public void testCompareToForPositveDollarHundredthVsNegativeCent(){}
+	public void testCompareToForPositveDollarHundredthVsNegativeCentHundredth(){}
+	public void testCompareToForPositveDollarHundredthVsNegativeDollar(){}
+	public void testCompareToForPositveDollarHundredthVsNegativeDollarCent(){}
+	public void testCompareToForPositveDollarHundredthVsNegativeDollarHundredth(){}
+	public void testCompareToForPositveDollarHundredthVsNegativeDollarCentHundredth(){}
+	
+	// more methods like the chunk above, e.g.:
+	// testCompareToForPositiveDollarCentVs*****
+	// testCompareToForPositiveHundredthVs****
+	// ****
 
 	/**
 	 * DO NOT DELETE THIS This is needed for the automatic marking process.
