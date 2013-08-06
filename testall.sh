@@ -1,3 +1,4 @@
+#!/bin/bash
 pushd ~/workspace/TestMoney
 
 echo;echo;echo;echo;

@@ -165,37 +165,148 @@ public class TestMoney extends TestCase {
 	// tests for compareTo() method.
 	// (These test depend on the previous tests passing.)
 
+	public void testCompareToForPositiveVsSame() {
+		Money o;
+		m = new Money(2, 2, 2);
+		o = new Money(2, 2, 2);
+		assertEquals(0, m.compareTo(o));
+		assertEquals(0, o.compareTo(m));
+	}
+
 	public void testCompareToForPositiveVsDollarDiff() {
+		Money o;
+		m = new Money(2, 2, 2);
+		o = new Money(3, 0);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
+		o = new Money(1, 0);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
 	}
 
 	public void testCompareToForPositiveVsCentsDiff() {
+		Money o;
+		m = new Money(1, 2, 1);
+		o = new Money(1, 3);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
+		o = new Money(1, 1);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
 	}
 
 	public void testCompareToForPositiveVsHundredthsDiff() {
+		Money o;
+		m = new Money(1, 1, 2);
+		o = new Money(1, 1, 3);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
+		o = new Money(1, 1, 1);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
 	}
 
 	public void testCompareToForPositiveVsNonpositive() {
+		Money o;
+		m = new Money(1, 1, 1);
+		o = new Money(-1, 0);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
+		o = new Money(0, -1);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
+		o = new Money(0, 0, -1);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
+		o = new Money(0, 0, 0);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
 	}
 
 	public void testCompareToForZeroVsPositive() {
+		Money o;
+		m = new Money(0, 0);
+		o = new Money(1, 0);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
+		o = new Money(0, 1);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
+		o = new Money(0, 0, 1);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
 	}
 
 	public void testCompareToForZeroVsZero() {
+		Money o;
+		m = new Money(0, 0);
+		o = new Money(0, 0);
+		assertEquals(0, m.compareTo(o));
+		assertEquals(0, o.compareTo(m));
 	}
 
 	public void testCompareToForZeroVsNegative() {
+		Money o;
+		m = new Money(0, 0);
+		o = new Money(-1, 0);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
+		o = new Money(0, -1);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
+		o = new Money(0, 0, -1);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
 	}
 
 	public void testCompareToForNegativeVsNonnegative() {
+		Money o;
+		m = new Money(-1, 0);
+		o = new Money(0, 0);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
+		o = new Money(0, 0, 1);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
+		o = new Money(0, 1);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
+		o = new Money(1, 0);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
 	}
 
 	public void testCompareToForNegativeVsDollarDiff() {
+		Money o;
+		m = new Money(-2, 2, 2);
+		o = new Money(-1, 0);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
+		o = new Money(-3, 0);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
 	}
 
 	public void testCompareToForNegativeVsCentsDiff() {
+		Money o;
+		m = new Money(-2, 2, 2);
+		o = new Money(-2, 1);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
+		o = new Money(-2, 3);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
 	}
 
 	public void testCompareToForNegativeVsHundredthsDiff() {
+		Money o;
+		m = new Money(-2, 2, 2);
+		o = new Money(-2, 2, 1);
+		assertEquals(-1, m.compareTo(o));
+		assertEquals(1, o.compareTo(m));
+		o = new Money(-2, 2, 3);
+		assertEquals(1, m.compareTo(o));
+		assertEquals(-1, o.compareTo(m));
 	}
 
 	/**
