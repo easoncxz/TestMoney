@@ -372,6 +372,42 @@ public class TestMoney extends TestCase {
 		assertEquals(false, m.equals(null));
 	}
 
+	// tests for multiply() method.
+	//
+	// factor > 1		
+	
+	public void testMultiplyNoCarries () {}
+	//public void testMultiplyHundredthsFieldOverflow(){} //+&-
+	//public void testMultiplyCentsFieldOverflow(){}
+	public void testMultiplyFieldSequencialCarry (){}
+	public void testMultiplyFieldParallelCarry (){}
+
+	// factor == 1
+	public void testMultiplyByOne(){} //+&-
+	
+	// factor < 1
+	public void testDivideAllFieldsDivisible (){}
+	//public void testDivideOnlyDollarBroken (){}
+	//public void testDivideOnlyCentsBroken (){}
+	//public void testDivideOnlyHundredthsBroken (){}
+	public void testDivideDollarAndCentsBroken (){}
+	public void testDivideThreeFieldsNotDivisibleThusNeedingToRound (){}
+
+	// tests for add() method.
+	//
+	// adding positive
+	public void testAddByPositiveWithNoCarries (){}
+	public void testAddByPositiveWithSequencialCarries (){}
+	public void testAddByPositiveWithParallelCarries (){}
+
+	// adding negative
+	public void testAddByNegativeWithNoBorrows (){}
+	public void testAddByNegativeWithSequencialBorrows (){}
+	public void testAddByNegativeWithParallelBorrows (){}
+
+	// adding zero
+	public void testAddByZero(){}
+
 	/**
 	 * DO NOT DELETE THIS This is needed for the automatic marking process.
 	 **/
