@@ -48,6 +48,8 @@ public class TestMoney extends TestCase {
 		assertEquals("-$1.00", m.toString());
 		m = new Money(0, -1);
 		assertEquals("-$0.01", m.toString());
+		m = new Money(0, -99);
+		assertEquals("-$0.99", m.toString());
 		m = new Money(-1, 1);
 		assertEquals("-$1.01", m.toString());
 	}
@@ -68,6 +70,21 @@ public class TestMoney extends TestCase {
 		} catch (IllegalArgumentException e) {
 			assertEquals("Invalid: more than one negative value",
 					e.getMessage());
+		}
+	}
+	
+	public void testCentsConstructorWithLargeParams(){
+		try{
+			m = new Money(0,100);
+			fail("Note: Should have thrown IllegalArgumentException.");
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid value: out of range", e.getMessage());
+		}
+		try{
+			m = new Money(0,-100);
+			fail("Note: Should have thrown IllegalArgumentException.");
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid value: out of range", e.getMessage());
 		}
 	}
 
@@ -159,6 +176,33 @@ public class TestMoney extends TestCase {
 		} catch (IllegalArgumentException e) {
 			assertEquals("Invalid: more than one negative value",
 					e.getMessage());
+		}
+	}
+
+	public void testHundredthsConstructorWithLargeParams() {
+		try{
+			m = new Money(0, 0, 100);
+			fail("Note: Should have thrown IllegalArgumentException.");
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid value: out of range", e.getMessage());
+		}
+		try{
+			m = new Money(0, 0, -100);
+			fail("Note: Should have thrown IllegalArgumentException.");
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid value: out of range", e.getMessage());
+		}
+		try{
+			m = new Money(0, 100, 0);
+			fail("Note: Should have thrown IllegalArgumentException.");
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid value: out of range", e.getMessage());
+		}
+		try{
+			m = new Money(0, -100, 0);
+			fail("Note: Should have thrown IllegalArgumentException.");
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid value: out of range", e.getMessage());
 		}
 	}
 
@@ -307,6 +351,25 @@ public class TestMoney extends TestCase {
 		o = new Money(-2, 2, 3);
 		assertEquals(1, m.compareTo(o));
 		assertEquals(-1, o.compareTo(m));
+	}
+
+	// test for equals() method.
+	
+	public void testEqualsForEqualMoney() {
+		m = new Money(2, 2);
+		assertEquals(true, m.equals(new Money(2, 2)));
+		m = new Money(-2, 2);
+		assertEquals(true, m.equals(new Money(-2, 2)));
+	}
+
+	public void testEqualsForUnequalMoney() {
+		m = new Money(2, 2);
+		assertEquals(false, m.equals(new Money(-2, 2)));
+	}
+
+	public void testEqualsForNull() {
+		m = new Money(2, 2);
+		assertEquals(false, m.equals(null));
 	}
 
 	/**
