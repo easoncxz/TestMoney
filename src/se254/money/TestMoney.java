@@ -29,18 +29,8 @@ public class TestMoney extends TestCase {
 	// tests for Cents Constructor
 
 	public void testCentsConstructorSimple() {
-		m = new Money(1, 0);
-		assertEquals("$1.00", m.toString());
-	}
-
-	public void testCentsConstructorWithLeadingZero() {
-		m = new Money(0, 0);
-		assertEquals("$0.00", m.toString());
-	}
-
-	public void testCentsConstructorWithTrailingZero() {
-		m = new Money(1, 10);
-		assertEquals("$1.10", m.toString());
+		m = new Money(0, 10);
+		assertEquals("$0.10", m.toString());
 	}
 
 	public void testCentsConstructorWithLegalNegatives() {
@@ -48,8 +38,6 @@ public class TestMoney extends TestCase {
 		assertEquals("-$1.00", m.toString());
 		m = new Money(0, -1);
 		assertEquals("-$0.01", m.toString());
-		m = new Money(0, -99);
-		assertEquals("-$0.99", m.toString());
 		m = new Money(-1, 1);
 		assertEquals("-$1.01", m.toString());
 	}
@@ -90,41 +78,29 @@ public class TestMoney extends TestCase {
 
 	// tests for Hundredths Constructor
 
-	public void testHundredthsConstructorSimple() {
-		m = new Money(1, 0, 0);
-		assertEquals("$1.00", m.toString());
-	}
-
-	public void testHundredthsConstructorWithLeadingZero() {
-		m = new Money(0, 0, 1);
-		assertEquals("$0.0001", m.toString());
-	}
-
 	public void testHundredthsConstructorWithTrailingZeros() {
 		m = new Money(0, 0, 10);
 		assertEquals("$0.001", m.toString());
 	}
 
-	public void testHundredthsConstructorWithLegalOneNegative() {
+	public void testHundredthsConstructorWithLegalSingleNegative() {
 		m = new Money(0, 0, -1);
 		assertEquals("-$0.0001", m.toString());
-		m = new Money(0, 0, -10);
-		assertEquals("-$0.001", m.toString());
 		m = new Money(0, -1, 0);
 		assertEquals("-$0.01", m.toString());
 		m = new Money(-1, 0, 0);
 		assertEquals("-$1.00", m.toString());
 	}
 
-	public void testHundredthsConstructorWithLegalNegatives() {
+	public void testHundredthsConstructorWithLegalLeadingNegative() {
 		m = new Money(0, -1, 1);
 		assertEquals(m.toString(), "-$0.0101");
 		m = new Money(-1, 0, 1);
 		assertEquals(m.toString(), "-$1.0001");
 		m = new Money(-1, 1, 0);
 		assertEquals(m.toString(), "-$1.01");
-		m = new Money(-1, 0, 10);
-		assertEquals(m.toString(), "-$1.001");
+		m = new Money(-1, 1, 1);
+		assertEquals(m.toString(), "-$1.0101");
 	}
 
 	public void testHundredthsConstructorWithIllegalNegativeAfterPositive() {
@@ -142,6 +118,12 @@ public class TestMoney extends TestCase {
 		}
 		try {
 			m = new Money(1, -1, 0);
+			fail("Note: Should have thrown IllegalArgumentException.");
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid: negative after non-zero", e.getMessage());
+		}
+		try {
+			m = new Money(1, 1, -1);
 			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
 			assertEquals("Invalid: negative after non-zero", e.getMessage());
@@ -230,22 +212,22 @@ public class TestMoney extends TestCase {
 
 	public void testCompareToForPositiveVsCentsDiff() {
 		Money o;
-		m = new Money(1, 2, 1);
-		o = new Money(1, 3);
+		m = new Money(2, 2, 2);
+		o = new Money(2, 3);
 		assertEquals(-1, m.compareTo(o));
 		assertEquals(1, o.compareTo(m));
-		o = new Money(1, 1);
+		o = new Money(2, 1);
 		assertEquals(1, m.compareTo(o));
 		assertEquals(-1, o.compareTo(m));
 	}
 
 	public void testCompareToForPositiveVsHundredthsDiff() {
 		Money o;
-		m = new Money(1, 1, 2);
-		o = new Money(1, 1, 3);
+		m = new Money(2, 2, 2);
+		o = new Money(2, 2, 3);
 		assertEquals(-1, m.compareTo(o));
 		assertEquals(1, o.compareTo(m));
-		o = new Money(1, 1, 1);
+		o = new Money(2, 2, 1);
 		assertEquals(1, m.compareTo(o));
 		assertEquals(-1, o.compareTo(m));
 	}
@@ -273,12 +255,6 @@ public class TestMoney extends TestCase {
 		o = new Money(1, 0);
 		assertEquals(-1, m.compareTo(o));
 		assertEquals(1, o.compareTo(m));
-		o = new Money(0, 1);
-		assertEquals(-1, m.compareTo(o));
-		assertEquals(1, o.compareTo(m));
-		o = new Money(0, 0, 1);
-		assertEquals(-1, m.compareTo(o));
-		assertEquals(1, o.compareTo(m));
 	}
 
 	public void testCompareToForZeroVsZero() {
@@ -293,12 +269,6 @@ public class TestMoney extends TestCase {
 		Money o;
 		m = new Money(0, 0);
 		o = new Money(-1, 0);
-		assertEquals(1, m.compareTo(o));
-		assertEquals(-1, o.compareTo(m));
-		o = new Money(0, -1);
-		assertEquals(1, m.compareTo(o));
-		assertEquals(-1, o.compareTo(m));
-		o = new Money(0, 0, -1);
 		assertEquals(1, m.compareTo(o));
 		assertEquals(-1, o.compareTo(m));
 	}
@@ -354,10 +324,9 @@ public class TestMoney extends TestCase {
 	}
 
 	public void testCompareToNull(){
-		int i;
 		try {
 			m = new Money();
-			i = m.compareTo(null);
+			int i = m.compareTo(null);
 			fail("Note: Should have thrown IllegalArgumentException.");
 		} catch (IllegalArgumentException e) {
 			assertEquals("Invalid: null argument", e.getMessage());
@@ -367,13 +336,13 @@ public class TestMoney extends TestCase {
 	// test for equals() method.
 	
 	public void testEqualsForEqualMoney() {
-		m = new Money(-2, 2);
-		assertEquals(true, m.equals(new Money(-2, 2)));
+		m = new Money(2, 2);
+		assertEquals(true, m.equals(new Money(2, 2)));
 	}
 
 	public void testEqualsForUnequalMoney() {
 		m = new Money(2, 2);
-		assertEquals(false, m.equals(new Money(-2, 2)));
+		assertEquals(false, m.equals(new Money(1, 1)));
 	}
 
 	public void testEqualsForNull() {
@@ -382,8 +351,6 @@ public class TestMoney extends TestCase {
 	}
 
 	// tests for multiply() method.
-	//
-	// factor > 1		
 	
 	public void testMultiplyNoCarries () {
 		m = new Money(1, 1, 1);
@@ -398,8 +365,6 @@ public class TestMoney extends TestCase {
 		assertEquals("$3.01", (m.multiply(2.0)).toString());
 	}
 
-	// factor == 1
-
 	public void testMultiplyByOne(){
 		m = new Money(2, 2, 2);
 		assertEquals("$2.0202", (m.multiply(1.0)).toString());
@@ -407,8 +372,6 @@ public class TestMoney extends TestCase {
 		assertEquals("-$2.0202", (m.multiply(1.0)).toString());
 	}
 	
-	// 0 < factor < 1
-	 
 	public void testDivideAllFieldsDivisible (){
 		m = new Money(4, 4, 4);
 		assertEquals("$1.0101", (m.multiply(0.25)).toString());	
@@ -431,8 +394,6 @@ public class TestMoney extends TestCase {
 		m = new Money(6, 0, 96);
 		assertEquals("$1.2019", (m.multiply(0.2)).toString());
 	}
-
-	// factor <= 0
 
 	public void testMultiplyByNegativeSequentialCarry() {
 		m = new Money(1, 33, 50);
@@ -465,8 +426,6 @@ public class TestMoney extends TestCase {
 	}
 
 	// tests for add() method.
-	//
-	// adding positive
 
 	public void testAddByPositiveWithNoCarries (){
 		m = new Money(5, 5, 5);
@@ -480,8 +439,6 @@ public class TestMoney extends TestCase {
 		m = new Money(1, 50, 50);
 		assertEquals("$3.01", (m.add(new Money(1, 50, 50))).toString());
 	}
-
-	// adding negative
 
 	public void testAddByNegativeWithNoBorrows (){
 		m = new Money(2, 2, 2);
@@ -508,15 +465,11 @@ public class TestMoney extends TestCase {
 		assertEquals("$0.00", (m.add(new Money(-2, 2, 2))).toString());
 	}
 
-	// adding zero
-
 	public void testAddByZero(){
 		m = new Money(2, 2, 2);
 		assertEquals("$2.0202", (m.add(new Money())).toString());
 	}
 
-	// adding null
-	
 	public void testAddByNull(){
 		m = new Money(2, 2);
 		try{
@@ -527,8 +480,6 @@ public class TestMoney extends TestCase {
 		}
 	}
 
-	// negative adding
-	
 	public void testAddToNegativeGettingNegative(){
 		m = new Money(-2, 2, 2);
 		assertEquals("-$1.0101", (m.add(new Money(1, 1, 1))).toString());
