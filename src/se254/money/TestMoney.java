@@ -443,7 +443,7 @@ public class TestMoney extends TestCase {
 		assertEquals("-$1.2019", (m.multiply(0.2)).toString());
 	}
 
-	public void testDividePositiveAndNeedingToRound5Javaly(){
+	public void testDivideNegativeAndNeedingToRound5Javaly(){
 		m = new Money(-6, 2, 2);
 		assertEquals("-$1.5050", (m.multiply(0.25)).toString());
 	}
