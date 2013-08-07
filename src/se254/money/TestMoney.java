@@ -353,11 +353,14 @@ public class TestMoney extends TestCase {
 		assertEquals(-1, o.compareTo(m));
 	}
 
+	//public void testCompareToNull(){
+	//	m = new Money(1, 1, 1);
+	//	assertEquals(1, m.compareTo(null));
+	//}
+
 	// test for equals() method.
 	
 	public void testEqualsForEqualMoney() {
-		m = new Money(2, 2);
-		assertEquals(true, m.equals(new Money(2, 2)));
 		m = new Money(-2, 2);
 		assertEquals(true, m.equals(new Money(-2, 2)));
 	}
@@ -376,37 +379,166 @@ public class TestMoney extends TestCase {
 	//
 	// factor > 1		
 	
-	public void testMultiplyNoCarries () {}
-	//public void testMultiplyHundredthsFieldOverflow(){} //+&-
-	//public void testMultiplyCentsFieldOverflow(){}
-	public void testMultiplyFieldSequencialCarry (){}
-	public void testMultiplyFieldParallelCarry (){}
+	public void testMultiplyNoCarries () {
+		m = new Money(1, 1, 1);
+		assertEquals("$2.0202", (m.multiply(2.0)).toString());
+	}
+	public void testMultiplySequencialCarry (){
+		m = new Money(1, 33, 50);
+		assertEquals("$4.005", (m.multiply(3.0)).toString());
+	}
+	public void testMultiplyParallelCarry (){
+		m = new Money(1, 50, 50);
+		assertEquals("$3.01", (m.multiply(2.0)).toString());
+	}
 
 	// factor == 1
-	public void testMultiplyByOne(){} //+&-
+
+	public void testMultiplyByOne(){
+		m = new Money(2, 2, 2);
+		assertEquals("$2.0202", (m.multiply(1.0)).toString());
+		m = new Money(-2, 2, 2);
+		assertEquals("-$2.0202", (m.multiply(1.0)).toString());
+	}
 	
-	// factor < 1
-	public void testDivideAllFieldsDivisible (){}
-	//public void testDivideOnlyDollarBroken (){}
-	//public void testDivideOnlyCentsBroken (){}
-	//public void testDivideOnlyHundredthsBroken (){}
-	public void testDivideDollarAndCentsBroken (){}
-	public void testDivideThreeFieldsNotDivisibleThusNeedingToRound (){}
+	// 0 < factor < 1
+	 
+	public void testDivideAllFieldsDivisible (){
+		m = new Money(4, 4, 4);
+		assertEquals("$1.0101", (m.multiply(0.25)).toString());	
+	}
+	public void testDivideDollarAndCentsBroken (){
+		m =  new Money(1, 30, 0);
+		assertEquals("$0.325", (m.multiply(0.25)).toString());
+	}
+	public void testDividePositiveAndNeedingToRoundUp (){
+		m = new Money(9, 9, 9);
+		assertEquals("$1.8182", (m.multiply(0.2)).toString());
+	}
+
+	public void testDividePositiveAndNeedingToRound5(){
+		m = new Money(6, 2, 2);
+		assertEquals("$1.5051", (m.multiply(0.25)).toString());
+	}
+
+	public void testDividePositiveAndNeedingToRoundDown(){
+		m = new Money(6, 0, 96);
+		assertEquals("$1.2019", (m.multiply(0.2)).toString());
+	}
+
+	// factor <= 0
+
+	public void testMultiplyByNegativeSequentialCarry() {
+		m = new Money(1, 33, 50);
+		assertEquals("-$4.005", (m.multiply(-3.0)).toString());
+	}
+
+	public void testDivideNegativeByNegativeNeedingToRoundUp(){
+		m = new Money(-9, 9, 9);
+		assertEquals("$1.8182", (m.multiply(-0.2)).toString());
+	}
+
+	public void testDivideNegativeAndNeedingToRoundUp(){
+		m = new Money(-6, 0, 96);
+		assertEquals("-$1.2019", (m.multiply(0.2)).toString());
+	}
+
+	public void testDividePositiveAndNeedingToRound5Javaly(){
+		m = new Money(-6, 2, 2);
+		assertEquals("-$1.5050", (m.multiply(0.25)).toString());
+	}
+
+	public void testDivideNegativeAndNeedingToRoundDown(){
+		m = new Money(-9, 9, 9);
+		assertEquals("-$1.8182", (m.multiply(0.2)).toString());
+	}
+
+	public void testMultiplyByZero(){
+		m = new Money(9, 9, 9);
+		assertEquals("$0.00", (m.multiply(0.0)).toString());
+	}
 
 	// tests for add() method.
 	//
 	// adding positive
-	public void testAddByPositiveWithNoCarries (){}
-	public void testAddByPositiveWithSequencialCarries (){}
-	public void testAddByPositiveWithParallelCarries (){}
+
+	public void testAddByPositiveWithNoCarries (){
+		m = new Money(5, 5, 5);
+		assertEquals("$10.101", (m.add(new Money(5, 5, 5))).toString());
+	}
+	public void testAddByPositiveWithSequencialCarries (){
+		m = new Money(1, 99, 1);
+		assertEquals("$2.00", (m.add(new Money(0, 0, 99))).toString());	
+	}
+	public void testAddByPositiveWithParallelCarries (){
+		m = new Money(1, 50, 50);
+		assertEquals("$3.01", (m.add(new Money(1, 50, 50))).toString());
+	}
 
 	// adding negative
-	public void testAddByNegativeWithNoBorrows (){}
-	public void testAddByNegativeWithSequencialBorrows (){}
-	public void testAddByNegativeWithParallelBorrows (){}
+
+	public void testAddByNegativeWithNoBorrows (){
+		m = new Money(2, 2, 2);
+		assertEquals("$1.0101", (m.add(new Money(-1, 1, 1))).toString());
+	}
+
+	public void testAddByNegativeWithSequencialBorrows (){
+		m = new Money(1, 0, 2);
+		assertEquals("$0.9999", (m.add(new Money(0, 0, -3))).toString());
+	}
+
+	public void testAddByNegativeWithParallelBorrows (){
+		m = new Money(2, 2, 2);
+		assertEquals("$1.9798", (m.add(new Money(0, -4, 4))).toString());
+	}
+
+	public void testAddNegativeToPositiveGettingNegative(){
+		m = new Money(2, 2, 2);
+		assertEquals("-$3.0303", (m.add(new Money(-5, 5, 5))).toString());
+	}
+
+	public void testAddNegativeToPositiveGettingZero(){
+		m = new Money(2, 2, 2);
+		assertEquals("$0.00", (m.add(new Money(-2, 2, 2))).toString());
+	}
 
 	// adding zero
-	public void testAddByZero(){}
+
+	public void testAddByZero(){
+		m = new Money(2, 2, 2);
+		assertEquals("$2.0202", (m.add(new Money())).toString());
+	}
+
+	// adding null
+	
+	public void testAddByNull(){
+		m = new Money(2, 2);
+		try{
+			Money o = m.add(null);
+			fail("Note: Should have thrown IllegalArgumentException.");
+		} catch(IllegalArgumentException e){
+			assertEquals("Invalid: null argument", e.getMessage());
+		}
+	}
+
+	// negative adding
+	
+	public void testAddToNegativeGettingNegative(){
+		m = new Money(-2, 2, 2);
+		assertEquals("-$1.0101", (m.add(new Money(1, 1, 1))).toString());
+		m = new Money(-1, 50, 50);
+		assertEquals("-$3.01", (m.add(new Money(-1, 50, 50))).toString());
+	}
+
+	public void testAddToNegativeGettingZero(){
+		m = new Money(-2, 2, 2);
+		assertEquals("$0.00", (m.add(new Money(2, 2, 2))).toString());
+	}
+
+	public void testAddToNegativeGettingPositive(){
+		m = new Money(-2, 2, 2);
+		assertEquals("$3.0303", (m.add(new Money(5, 5, 5))).toString());
+	}
 
 	/**
 	 * DO NOT DELETE THIS This is needed for the automatic marking process.
