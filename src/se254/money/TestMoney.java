@@ -353,10 +353,16 @@ public class TestMoney extends TestCase {
 		assertEquals(-1, o.compareTo(m));
 	}
 
-	//public void testCompareToNull(){
-	//	m = new Money(1, 1, 1);
-	//	assertEquals(1, m.compareTo(null));
-	//}
+	public void testCompareToNull(){
+		int i;
+		try {
+			m = new Money();
+			i = m.compareTo(null);
+			fail("Note: Should have thrown IllegalArgumentException.");
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid: null argument", e.getMessage());
+		}	
+	}
 
 	// test for equals() method.
 	
@@ -416,7 +422,7 @@ public class TestMoney extends TestCase {
 		assertEquals("$1.8182", (m.multiply(0.2)).toString());
 	}
 
-	public void testDividePositiveAndNeedingToRound5(){
+	public void testDividePositiveAndNeedingToRound5Javaly(){
 		m = new Money(6, 2, 2);
 		assertEquals("$1.5051", (m.multiply(0.25)).toString());
 	}
@@ -445,7 +451,7 @@ public class TestMoney extends TestCase {
 
 	public void testDivideNegativeAndNeedingToRound5Javaly(){
 		m = new Money(-6, 2, 2);
-		assertEquals("-$1.5050", (m.multiply(0.25)).toString());
+		assertEquals("-$1.5051", (m.multiply(0.25)).toString());
 	}
 
 	public void testDivideNegativeAndNeedingToRoundDown(){
