@@ -61,7 +61,7 @@ public class TestMoney extends TestCase {
 		}
 	}
 	
-	public void testCentsConstructorWithLargeParams(){
+	public void testCentsConstructorWithIllegalLargeParams(){
 		try{
 			m = new Money(0,100);
 			fail("Note: Should have thrown IllegalArgumentException.");
@@ -161,7 +161,7 @@ public class TestMoney extends TestCase {
 		}
 	}
 
-	public void testHundredthsConstructorWithLargeParams() {
+	public void testHundredthsConstructorWithIllegalLargeParams() {
 		try{
 			m = new Money(0, 0, 100);
 			fail("Note: Should have thrown IllegalArgumentException.");
@@ -333,7 +333,7 @@ public class TestMoney extends TestCase {
 		}	
 	}
 
-	// test for equals() method.
+	// tests for equals() method.
 	
 	public void testEqualsForDollarCentsHundredthsVsSame() {
 		m = new Money(2, 2, 2);
@@ -360,34 +360,9 @@ public class TestMoney extends TestCase {
 		assertEquals(false, m.equals(new Money(-2, 2, 2)));
 	}
 
-	public void testEqualsForCentsHundredthsVsSame() {
-		m = new Money(0, 2, 2);
-		assertEquals(true, m.equals(new Money(0, 2, 2)));
-	}
-
-	public void testEqualsForCentsHundredthsVsCentsDiff() {
-		m = new Money(0, 2, 2);
-		assertEquals(false, m.equals(new Money(0, 1, 2)));
-	}
-
-	public void testEqualsForCentsHundredthsVsHundredthsDiff() {
-		m = new Money(0, 2, 2);
-		assertEquals(false, m.equals(new Money(0, 2, 1)));
-	}
-
 	public void testEqualsForCentsHundredthsVsSignDiff() {
 		m = new Money(0, 2, 2);
 		assertEquals(false, m.equals(new Money(0, -2, 2)));
-	}
-
-	public void testEqualsForHundredthsVsSame() {
-		m = new Money(0, 0, 2);
-		assertEquals(true, m.equals(new Money(0, 0, 2)));
-	}
-
-	public void testEqualsForHundredthsVsHundredthsDiff() {
-		m = new Money(0, 0, 2);
-		assertEquals(false, m.equals(new Money(0, 0, 1)));
 	}
 
 	public void testEqualsForHundredthsVsSignDiff() {
