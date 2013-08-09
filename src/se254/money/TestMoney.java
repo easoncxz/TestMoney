@@ -485,11 +485,12 @@ public class TestMoney extends TestCase {
 	// -	How many "fields" are used in the Money object to
 	// 	test (namely "m") - i.e., out of the 3 of
 	// 	Dollars, Cents, and Hundredths, how many are non-zero.
-	// -	Whether "m" is positive/zero/negative.
-	// - 	How many Carries occured. "Carries" is as in carries 
+	// -	Whether "m" is positive/negative.
+	// -	Whether the amount to add to "m" is positive/negative.
+	// - 	How many Carries occured. "Carry" is as in carries 
 	// 	between different "fields" when performing addition.
 	
-	public void testAddOneFieldAndNoCarries(){
+	public void testAddPositiveOneFieldWithNoCarries(){
 		m = new Money(0, 0, 1);
 		assertEquals("$0.0003", (m.add(new Money(0, 0, 2))).toString());
 		m = new Money(0, 1, 0);
@@ -498,27 +499,27 @@ public class TestMoney extends TestCase {
 		assertEquals("$3.00", (m.add(new Money(2, 0, 0))).toString());
 	}
 
-	public void testAddOneFieldAndOneCarry(){
+	public void testAddPositiveOneFieldWithOneCarry(){
 		m = new Money(0, 0, 25);
 		assertEquals("$0.01", (m.add(new Money(0, 0, 75))).toString());
 		m = new Money(0, 25, 0);
 		assertEquals("$1.00", (m.add(new Money(0, 75, 0))).toString());
 	}
 
-	public void testAddOneFieldAndTwoCarries(){
+	public void testAddPositiveOneFieldWithTwoCarries(){
 		// no such case!
 	}
 
-	public void testAddTwoFieldsAndNoCarries(){
+	public void testAddPositiveTwoFieldsWithNoCarries(){
 		m = new Money(0, 1, 1);
-		assertEquals("$0.33", (m.add(new Money(0, 2, 2))).toString());
+		assertEquals("$0.0303", (m.add(new Money(0, 2, 2))).toString());
 		m = new Money(1, 0, 1);
 		assertEquals("$3.0003", (m.add(new Money(2, 0, 2))).toString());
 		m = new Money(1, 1, 0);
 		assertEquals("$3.03", (m.add(new Money(2, 2, 0))).toString());
 	}
 
-	public void testAddTwoFieldsAndOneCarry(){
+	public void testAddPositiveTwoFieldsWithOneCarry(){
 		m = new Money(0, 25, 1);
 		assertEquals("$1.0003", (m.add(new Money(0, 75, 2))).toString());
 		m = new Money(1, 0, 25);
@@ -529,7 +530,7 @@ public class TestMoney extends TestCase {
 		assertEquals("$0.02", (m.add(new Money(0, 0, 75))).toString());
 	}
 
-	public void testAddTwoFieldsAndTwoCarries(){
+	public void testAddPositiveTwoFieldsWithTwoCarries(){
 		m = new Money(0, 25, 25);
 		assertEquals("$1.01", (m.add(new Money(0, 75, 75))).toString());
 		// possibly redundant test:
@@ -537,19 +538,19 @@ public class TestMoney extends TestCase {
 		assertEquals("$1.00", (m.add(new Money(0, 75, 75))).toString());
 	}
 
-	public void testAddThreeFieldsAndNoCarries(){
+	public void testAddPositiveThreeFieldsWithNoCarries(){
 		m = new Money(1, 1, 1);
 		assertEquals("$3.0303", (m.add(new Money(2, 2, 2))).toString());
 	}
 
-	public void testAddThreeFieldsAndOneCarry(){
+	public void testAddPositiveThreeFieldsWithOneCarry(){
 		m = new Money(1, 25, 1);
 		assertEquals("$2.0003", (m.add(new Money(0, 75, 2))).toString());
 		m = new Money(1, 1, 25);
 		assertEquals("$1.04", (m.add(new Money(0, 2, 75))).toString());
 	}
 
-	public void testAddThreeFieldsAndTwoCarries(){
+	public void testAddPositiveThreeFieldsWithTwoCarries(){
 		m = new Money(1, 25, 25);
 		assertEquals("$2.01", (m.add(new Money(0, 75, 75))).toString());
 		// possibly redundant test:
@@ -557,13 +558,87 @@ public class TestMoney extends TestCase {
 		assertEquals("$2.00", (m.add(new Money(0, 75, 75))).toString());
 	}
 
-	// testAddNegativeOneFieldWithOneCarry
-	// testAddNegativeTwoFieldsWithTwoCarries
-	// testAddNegativeThreeFieldsWithTwoCarries
-	// testNegativeOneFieldBecomingPositiveWithNoCarry
-	// testNegativeOneFieldBecomingPositiveWithOneCarry
-	// testNegativeTwoFieldsBecomingPositiveWithNoCarry
-	// testNegativeTwoFieldsBecomingPositiveWithOneCarry
+	public void testAddNegativeOneFieldWithNoCarry(){
+		m = new Money(0, 0, -1);
+		assertEquals("-$0.0003", (m.add(new Money(0, 0, -2))).toString());
+		m = new Money(0, -1);
+		assertEquals("-$0.03", (m.add(new Money(0, -2))).toString());
+		m = new Money(-1, 0);
+		assertEquals("-$3.00", (m.add(new Money(-2, 0))).toString());
+	}
+
+	public void testAddNegativeOneFieldWithOneCarry(){
+		m = new Money(0, 0, -25);
+		assertEquals("-$0.01", (m.add(new Money(0, 0, -75))).toString());
+		m = new Money(0, -25);
+		assertEquals("-$1.00", (m.add(new Money(0, -75))).toString());
+	}
+
+	public void testAddNegativeOneFieldWithTwoCarries(){
+		// no such case!	
+	}
+
+	public void testAddNegativeTwoFieldsWithNoCarries(){
+		m = new Money(0, -1, 1);
+		assertEquals("-$0.0303", (m.add(new Money(0, -2, 2))).toString());
+		m = new Money(-1, 0, 1);
+		assertEquals("-$3.0003", (m.add(new Money(-2, 0, 2))).toString());
+		m = new Money(-1, 1);
+		assertEquals("-$3.03", (m.add(new Money(-2, 2))).toString());
+	}
+
+	public void testAddNegativeTwoFieldsWithTwoCarries(){
+		m = new Money(0, -25, 25);
+		assertEquals("-$1.01", (m.add(new Money(0, -75, 75))).toString());
+	}
+
+	public void testAddNegativeThreeFieldsWithTwoCarries(){
+		m = new Money(-1, 25, 25);
+		assertEquals("-$2.01", (m.add(new Money(0, -75, 75))).toString());
+	}
+
+	// tests for adding Money objects representing amounts of different sign.
+
+	public void testAddNegativeOneFieldBecomingPositiveWithNoCarries(){
+		m = new Money(0, 0, -1);
+		assertEquals("$0.0001", (m.add(new Money(0, 0, 2))).toString());
+		m = new Money(0, -1);
+		assertEquals("$0.01", (m.add(new Money(0, 2))).toString());
+		m = new Money(-1, 0);
+		assertEquals("$1.00", (m.add(new Money(2, 0))).toString());
+	}
+	
+	public void testAddNegativeOneFieldBecomingPositiveWithOneCarry(){
+		m = new Money(0, 0, -25);
+		assertEquals("$0.0075", (m.add(new Money(0, 1, 0))).toString());
+		m = new Money(0, -25);
+		assertEquals("$0.75", (m.add(new Money(1, 0))).toString());
+	}
+
+	public void testAddNegativeOneFieldBecomingPositiveWithTwoCarries(){
+		// no such case!
+	}
+
+	public void testAddNegativeTwoFieldsBecomingPositiveWithNoCarries(){
+		m = new Money(0, -1, 1);
+		assertEquals("$0.0101", (m.add(new Money(0, 2, 2))).toString());
+		m = new Money(-1, 1);
+		assertEquals("$1.01", (m.add(new Money(2, 2))).toString());
+		m = new Money(-1, 0, 1);
+		assertEquals("$1.0001", (m.add(new Money(2, 0, 2))).toString());
+	}
+
+	public void testAddNegativeTwoFieldsBecomingPositiveWithOneCarry(){}
+	public void testAddNegativeTwoFieldsBecomingPositiveWithTwoCarries(){}
+	public void testAddNegativeThreeFieldsBecomingPositiveWithNoCarries(){}
+	public void testAddNegativeThreeFieldsBecomingPositiveWithOneCarry(){}
+	public void testAddNegativeThreeFieldsBecomingPositiveWithTwoCarries(){}
+	public void testAddNegativeThreeFieldsBecomingPositiveWithThreeCarries(){}
+
+	public void testAddNegativeTwoFieldsBecomingPositive(){
+		m = new Money(0, -1, 1);
+		assertEquals("$0.0099", (m.add(new Money(0, 2))).toString());
+	}
 
 	/**
 	 * DO NOT DELETE THIS This is needed for the automatic marking process.
