@@ -628,16 +628,29 @@ public class TestMoney extends TestCase {
 		assertEquals("$1.0001", (m.add(new Money(2, 0, 2))).toString());
 	}
 
-	public void testAddNegativeTwoFieldsBecomingPositiveWithOneCarry(){}
-	public void testAddNegativeTwoFieldsBecomingPositiveWithTwoCarries(){}
-	public void testAddNegativeThreeFieldsBecomingPositiveWithNoCarries(){}
-	public void testAddNegativeThreeFieldsBecomingPositiveWithOneCarry(){}
-	public void testAddNegativeThreeFieldsBecomingPositiveWithTwoCarries(){}
-	public void testAddNegativeThreeFieldsBecomingPositiveWithThreeCarries(){}
-
-	public void testAddNegativeTwoFieldsBecomingPositive(){
+	public void testAddNegativeTwoFieldsBecomingPositiveWithOneCarry(){
 		m = new Money(0, -1, 1);
-		assertEquals("$0.0099", (m.add(new Money(0, 2))).toString());
+		assertEquals("$0.9901", (m.add(new Money(1, 0, 2))).toString());
+		m = new Money(0, -1, 1);
+		assertEquals("$0.0099", (m.add(new Money(0, 2, 0))).toString());
+	}
+
+	public void testAddNegativeTwoFieldsBecomingPositiveWithTwoCarries(){
+		// omitted.
+	}
+
+	public void testAddNegativeThreeFieldsBecomingPositiveWithNoCarries(){
+		m = new Money(-1, 1, 1);
+		assertEquals("$1.0101", (m.add(new Money(2, 2, 2))).toString());
+	}
+
+	public void testAddNegativeThreeFieldsBecomingPositiveWithOneCarry(){
+		// unknown. ???
+	}
+
+	public void testAddNegativeThreeFieldsBecomingPositiveWithTwoCarries(){
+		m = new Money(-1, 1, 1);
+		assertEquals("$0.9899", (m.add(new Money(2, 0))).toString());	
 	}
 
 	/**
