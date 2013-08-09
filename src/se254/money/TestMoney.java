@@ -27,6 +27,10 @@ public class TestMoney extends TestCase {
 	}
 
 	// tests for Cents Constructor
+	// =====
+	// These tests are mainly for detecting IUT behaviour when
+	// dealing with unusual - i.e. negative or large absolute value - 
+	// arguments during construction.
 
 	public void testCentsConstructorSimple() {
 		m = new Money(0, 10);
@@ -77,6 +81,9 @@ public class TestMoney extends TestCase {
 	}
 
 	// tests for Hundredths Constructor
+	// =====
+	// These tests are based on same considerations as the tests
+	// for the Cents Constructor.
 
 	public void testHundredthsConstructorWithTrailingZeros() {
 		m = new Money(0, 0, 10);
@@ -189,7 +196,21 @@ public class TestMoney extends TestCase {
 	}
 
 	// tests for compareTo() method.
-	// (These test depend on the previous tests passing.)
+	// =====
+	// The outcome of these tests would be relevant ONLY IF 
+	// the previous tests (namely the tests for constructors) have
+	// all successfully passed.
+	// JUnit "Errors" certainly still indicate a failure.
+	//
+	// All these tests are testing on a Money object with all
+	// three of Dollars, Cents, and Hundredths having a value.
+	// (The case on $0.00 may be an exception to this.)
+	//
+	// The tests 
+	// -	first partition on whether the Money object "m" to test 
+	// 	represents a positive/zero/negative amount, 
+	// -	then partition on which part of the other money object
+	// 	(namely "o") is different from m
 
 	public void testCompareToForPositiveVsSame() {
 		Money o;
@@ -334,7 +355,15 @@ public class TestMoney extends TestCase {
 	}
 
 	// tests for equals() method.
-	
+	// =====
+	// These tests in principle are based on the same thinking as
+	// the above tests for compareTo() method.
+	// -	first partition on how many fields (i.e. out of Dollar,
+	// 	Cents, and Hundredths) of the Money object to be tested
+	// 	(namely "m") are non-trivial (i.e. non-zero).
+	// - 	then partition on what part of the other Money object
+	// 	is different from "m".
+
 	public void testEqualsForDollarCentsHundredthsVsSame() {
 		m = new Money(2, 2, 2);
 		assertEquals(true, m.equals(new Money(2, 2, 2)));
@@ -451,10 +480,10 @@ public class TestMoney extends TestCase {
 	}
 
 	// tests for add() method.
-
+	
 	public void testAddByPositiveWithNoCarries (){
-		m = new Money(5, 5, 5);
-		assertEquals("$10.101", (m.add(new Money(5, 5, 5))).toString());
+		m = new Money(1, 1, 1);
+		assertEquals("$3.0303", (m.add(new Money(2, 2, 2))).toString());
 	}
 	public void testAddByPositiveWithSequencialCarries (){
 		m = new Money(1, 99, 1);
@@ -521,7 +550,7 @@ public class TestMoney extends TestCase {
 		m = new Money(-2, 2, 2);
 		assertEquals("$3.0303", (m.add(new Money(5, 5, 5))).toString());
 	}
-
+	
 	/**
 	 * DO NOT DELETE THIS This is needed for the automatic marking process.
 	 **/
