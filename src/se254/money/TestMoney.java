@@ -9,12 +9,14 @@ package se254.money;
 import junit.framework.TestCase;
 
 /**
- * As an assumption allowing for the logic of the tests, toString() is assumed
- * to be implemented correctly (i.e. can reliably represent the state of a Money
- * object correctly, as specified by the Money.toString() documentation.), due
- * to it being the only public method of the Money class that can report the
- * state of a Money object independently of the Money class.
- * 
+ * There are no dedicated tests for the toString() method; toString() is
+ * assumed to be correct, used all throughout this test suite (i.e. this
+ * Java class), and tested implicitly by being called in all sorts of 
+ * situations.
+ *
+ * If there seem to be a weirdly large amount of JUnit Failures, first
+ * check toString() for faults.
+ *
  * @author (Xuzong Chen, xche985)
  */
 public class TestMoney extends TestCase {
@@ -405,35 +407,35 @@ public class TestMoney extends TestCase {
 	}
 
 	// tests for multiply() method.
+	// =====
+	// Tests starting from the one having a negative factor
+	// covers only the more "corner" cases.
 	
 	public void testMultiplyNoCarries () {
 		m = new Money(1, 1, 1);
 		assertEquals("$2.0202", (m.multiply(2.0)).toString());
 	}
+
 	public void testMultiplySequencialCarry (){
 		m = new Money(1, 33, 50);
 		assertEquals("$4.005", (m.multiply(3.0)).toString());
 	}
+
 	public void testMultiplyParallelCarry (){
 		m = new Money(1, 50, 50);
 		assertEquals("$3.01", (m.multiply(2.0)).toString());
 	}
 
-	public void testMultiplyByOne(){
-		m = new Money(2, 2, 2);
-		assertEquals("$2.0202", (m.multiply(1.0)).toString());
-		m = new Money(-2, 2, 2);
-		assertEquals("-$2.0202", (m.multiply(1.0)).toString());
-	}
-	
 	public void testDivideAllFieldsDivisible (){
 		m = new Money(4, 4, 4);
 		assertEquals("$1.0101", (m.multiply(0.25)).toString());	
 	}
+
 	public void testDivideDollarAndCentsBroken (){
 		m =  new Money(1, 30, 0);
 		assertEquals("$0.325", (m.multiply(0.25)).toString());
 	}
+
 	public void testDividePositiveAndNeedingToRoundUp (){
 		m = new Money(9, 9, 9);
 		assertEquals("$1.8182", (m.multiply(0.2)).toString());
@@ -448,6 +450,8 @@ public class TestMoney extends TestCase {
 		m = new Money(6, 0, 96);
 		assertEquals("$1.2019", (m.multiply(0.2)).toString());
 	}
+
+	// multiply by negative
 
 	public void testMultiplyByNegativeSequentialCarry() {
 		m = new Money(1, 33, 50);
@@ -473,6 +477,8 @@ public class TestMoney extends TestCase {
 		m = new Money(-9, 9, 9);
 		assertEquals("-$1.8182", (m.multiply(0.2)).toString());
 	}
+
+	// multiply by zero
 
 	public void testMultiplyByZero(){
 		m = new Money(9, 9, 9);
@@ -645,7 +651,7 @@ public class TestMoney extends TestCase {
 	}
 
 	public void testAddNegativeThreeFieldsBecomingPositiveWithOneCarry(){
-		// unknown. ???
+		// omitted.
 	}
 
 	public void testAddNegativeThreeFieldsBecomingPositiveWithTwoCarries(){
